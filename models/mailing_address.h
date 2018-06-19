@@ -8,5 +8,5 @@ typedef struct
 	char *address;
 	char *city;
 	char *state;
-	int zip;
+	char *zip;
 } Address;
