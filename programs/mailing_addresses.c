@@ -30,12 +30,14 @@ int main(int argc, char *argv[])
 				printf("%s\n", line);
 				printf("%lu\n", strlen(line));
 				char *token;
-				token = strtok(line, "|");
+				char *rest = NULL;
+
+				token = strtok_r(line, "|", &rest);
 				while (token != NULL)
 				{
 					printf("token: %s\n", token);
 					printf("%s\n", line);
-					token = strtok(NULL, "|");
+					token = strtok_r(NULL, "|", &rest);
 				}
 			}		
 		}
