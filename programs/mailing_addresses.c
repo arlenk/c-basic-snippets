@@ -3,12 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <mailing_address.h>
+#include <linkedlist.h>
 
 #define LINE_BUFFER_SIZE 2048 /* max line length we can read in */
 
 Address parseline(char *line);
 void print_mailing_address(Address);
-
+void read_mailing_addresses(char *input_file, ListItem *list);
 
 /* convert a line of text into Address 
 */
@@ -63,17 +64,42 @@ Address parseline(char *line)
 
 int main(int argc, char *argv[])
 {
-	if (argc < 1)
+	if (argc < 2)
 	{
+		printf("must provide data file as input\n");
 		return 1;
 	}
+
 	char *input_file = argv[1];
 	printf("reading data from %s\n\n", input_file);
+
+	ListItem *address_book = NULL;
+	read_mailing_addresses(input_file, address_book);
+
+
 	int i = 0;
+	ListItem *address = address_book;
+	while (address != NULL)
+	{
+		printf("%d", address);
+		if (i % 100 == 0)
+		{
+			print_mailing_address(*(Address *) address->value);
+		}
+		i++;
+	}
 
+
+	return 0;	
+}
+
+
+void read_mailing_addresses(char *input_file, ListItem *list)
+{
 	FILE *input = fopen(input_file, "r");
-
+	int i = 0;
 	char line[LINE_BUFFER_SIZE];
+
 
 	while (fgets(line, LINE_BUFFER_SIZE, input))
 	{
@@ -85,18 +111,13 @@ int main(int argc, char *argv[])
 		}
 
 		Address address = parseline(line);
-
-		if (i % 100 == 0)
-		{
-			print_mailing_address(address);
-		}		
-		i++;
+		list = ListAppend(list, &address);
 	}
+
 	printf("read %d rows\n", i);
 	fclose(input);
-	
-	return 0;	
 }
+
 
 void print_mailing_address(Address address)
 {

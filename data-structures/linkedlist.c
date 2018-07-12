@@ -1,11 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <linkedlist.h>
 
-typedef struct ListItem
-{
-	void *value;
-	struct ListItem *next;
-} ListItem;
 
 ListItem *ListCreate(void *value)
 {
@@ -25,13 +21,15 @@ ListItem *ListAppend(ListItem *list, void *value)
 	return item;
 }
 
-
+/*
 int main(void)
 {
 	int i = 3;
 	int j = 4;
 
-	ListItem *list = ListCreate(&i);
+	//	ListItem *list = ListCreate(&i);
+    ListItem *list = NULL;
+    list = ListAppend(list, &i);
 	list = ListAppend(list, &j);
 
 	i = 0;
@@ -45,4 +43,4 @@ int main(void)
 	}
 
 	return 0;
-}
+}*/
