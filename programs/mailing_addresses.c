@@ -7,15 +7,15 @@
 
 #define LINE_BUFFER_SIZE 2048 /* max line length we can read in */
 
-Address parseline(char *line);
+Address *parseline(char *line);
 void print_mailing_address(Address);
 void read_mailing_addresses(char *input_file, ListItem **list);
 
 /* convert a line of text into Address 
 */
-Address parseline(char *line)
+Address *parseline(char *line)
 {
-	Address address;	
+	Address *address = (Address *) malloc(sizeof(Address));	
 	char *token;
 	char *rest = NULL;
 	char *end = NULL;
@@ -25,39 +25,39 @@ Address parseline(char *line)
 
 	// id
 	token = strtok_r(line, "|", &rest);
-	address.id = (int) strtol(token, &end, 10);
+	address->id = (int) strtol(token, &end, 10);
 
 	// first name
 	token = strtok_r(NULL, "|", &rest);
-	address.first_name = strdup(token);
+	address->first_name = strdup(token);
 
 	// last name
 	token = strtok_r(NULL, "|", &rest);
-	address.last_name = strdup(token);
+	address->last_name = strdup(token);
 
 	// email
 	token = strtok_r(NULL, "|", &rest);
-	address.email = strdup(token);
+	address->email = strdup(token);
 
 	// gender
 	token = strtok_r(NULL, "|", &rest);
-	address.gender = strdup(token);
+	address->gender = strdup(token);
 
 	// street address
 	token = strtok_r(NULL, "|", &rest);
-	address.address = strdup(token);
+	address->address = strdup(token);
 
 	// city
 	token = strtok_r(NULL, "|", &rest);
-	address.city = strdup(token);
+	address->city = strdup(token);
 
 	// state
 	token = strtok_r(NULL, "|", &rest);
-	address.state = strdup(token);
+	address->state = strdup(token);
 
 	// zip
 	token = strtok_r(NULL, "|", &rest);
-	address.zip = strdup(token);
+	address->zip = strdup(token);
 
 	return address;
 }
@@ -109,9 +109,9 @@ void read_mailing_addresses(char *input_file, ListItem **list)
 			i++;
 			continue;
 		}
-		Address address = parseline(line);
+		Address *address = parseline(line);
 	
-		*list = ListAppend(*list, &address);
+		*list = ListAppend(*list, address);
 		i++;
 	}
 
