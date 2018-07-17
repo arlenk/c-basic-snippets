@@ -9,7 +9,7 @@
 
 Address parseline(char *line);
 void print_mailing_address(Address);
-void read_mailing_addresses(char *input_file, ListItem *list);
+void read_mailing_addresses(char *input_file, ListItem **list);
 
 /* convert a line of text into Address 
 */
@@ -74,18 +74,18 @@ int main(int argc, char *argv[])
 	printf("reading data from %s\n\n", input_file);
 
 	ListItem *address_book = NULL;
-	read_mailing_addresses(input_file, address_book);
+	read_mailing_addresses(input_file, &address_book);
 
 
 	int i = 0;
 	ListItem *address = address_book;
 	while (address != NULL)
 	{
-		printf("%d", address);
 		if (i % 100 == 0)
 		{
 			print_mailing_address(*(Address *) address->value);
 		}
+		address = address->next;
 		i++;
 	}
 
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 }
 
 
-void read_mailing_addresses(char *input_file, ListItem *list)
+void read_mailing_addresses(char *input_file, ListItem **list)
 {
 	FILE *input = fopen(input_file, "r");
 	int i = 0;
@@ -109,9 +109,10 @@ void read_mailing_addresses(char *input_file, ListItem *list)
 			i++;
 			continue;
 		}
-
 		Address address = parseline(line);
-		list = ListAppend(list, &address);
+	
+		*list = ListAppend(*list, &address);
+		i++;
 	}
 
 	printf("read %d rows\n", i);
