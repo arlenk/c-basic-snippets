@@ -7,5 +7,12 @@ typedef struct ListItem
 	struct ListItem *next;
 } ListItem;
 
-ListItem *ListCreate(void *value);
-ListItem *ListAppend(ListItem *list, void *value);
+typedef struct
+{
+	int size;
+	ListItem *head;
+} LinkedList;
+
+
+LinkedList *ListCreate();
+void ListAppend(LinkedList *list, void *value);

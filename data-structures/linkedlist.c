@@ -3,22 +3,25 @@
 #include <linkedlist.h>
 
 
-ListItem *ListCreate(void *value)
+LinkedList *ListCreate()
 {
-	ListItem *item = (ListItem *) malloc(sizeof(ListItem));
-	item->value = value;
-	item->next = NULL;
+	LinkedList *list = (LinkedList *) malloc(sizeof(LinkedList));
+	list->size = 0;
+	list->head = NULL;
 
-	return item;
+	return list;
 }
 
-ListItem *ListAppend(ListItem *list, void *value)
+void ListAppend(LinkedList *list, void *value)
 {
 	ListItem *item = (ListItem *) malloc(sizeof(ListItem));
 	item->value = value;
-	item->next = list;
+	item->next = list->head;
 
-	return item;
+	list->head = item;
+	list->size++;
+
+	return;
 }
 
 /*
