@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <mailing_address.h>
-#include <linkedlist.h>
+#include <data-structures.h>
 
 #define LINE_BUFFER_SIZE 2048 /* max line length we can read in */
 
